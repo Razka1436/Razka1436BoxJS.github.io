@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Challenge Kotak Berpindah</title>
+    <style>
+      #kotak {
+        width: 200px;
+        height: 100px;
+        position: absolute;
+        border: 1px solid black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: black;
+      }
+      body {
+        margin: 20px;
+        border: 2px solid black;
+        box-sizing: border-box;
+        height: calc(100vh - 40px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="kotak">Tekan Saya</div>
+    <script>
+      var kotak = document.getElementById("kotak");
+
+      //lebar dan tinggi kotak
+      var lebarKotak = kotak.offsetWidth;
+      var tinggiKotak = kotak.offsetHeight;
+
+      //lebar dan tinggi area yang bisa ditempati
+      var lebarArea = window.innerWidth - lebarKotak;
+      var tinggiArea = window.innerHeight - tinggiKotak;
+
+      // Mengatur posisi awal kotak di tengah halaman
+      kotak.style.left = lebarArea / 2 + "px";
+      kotak.style.top = tinggiArea / 2 + "px";
+
+      kotak.addEventListener("click", pindahKotak);
+      function pindahKotak() {
+        // Mendapatkan lebar dan tinggi kotak
+        var lebarKotak = kotak.offsetWidth;
+        var tinggiKotak = kotak.offsetHeight;
+
+        // Mendapatkan lebar dan tinggi area yang bisa ditempati
+        var lebarArea = window.innerWidth - lebarKotak - 40; // Lebar border
+        var tinggiArea = window.innerHeight - tinggiKotak - 40; // Tinggi border
+
+        // Mendapatkan posisi saat ini
+        var posisiX = parseInt(kotak.style.left) || 0;
+        var posisiY = parseInt(kotak.style.top) || 0;
+
+        // Menghasilkan posisi acak untuk kotak
+        var posisiAcakX = Math.floor(Math.random() * lebarArea);
+        var posisiAcakY = Math.floor(Math.random() * tinggiArea);
+
+        // Mencegah kotak mendekati batas samping kanan
+        if (posisiAcakX > lebarArea - 100) {
+          posisiAcakX = lebarArea - 100;
+        }
+
+        // Mencegah kotak mendekati batas samping kiri
+        if (posisiAcakX < 100) {
+          posisiAcakX = 100;
+        }
+
+        // Mencegah kotak mendekati batas atas
+        if (posisiAcakY < 100) {
+          posisiAcakY = 100;
+        }
+
+        // Mencegah kotak mendekati batas bawah
+        if (posisiAcakY > tinggiArea - 100) {
+          posisiAcakY = tinggiArea - 100;
+        }
+
+        // Mengatur posisi kotak
+        kotak.style.left = posisiAcakX + "px";
+        kotak.style.top = posisiAcakY + "px";
+      }
+    </script>
+  </body>
+</html>
